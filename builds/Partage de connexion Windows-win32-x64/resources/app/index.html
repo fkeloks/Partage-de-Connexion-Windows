@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Partage de connexion Windows</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <button onclick="window.top.close(); return false" class="Close">&#x2169;</button>
+            <button id="Minimize" class="Minimize">&#x2212;</button>
+        </header>
+        <h2>Partage de connexion WiFi via Windows</h1>
+        <hr>
+        <h4>Etat du partage : <span id="WifiState">WiFi éteint</span></h4>
+        <form id="FormWifi" class="FormWifi" action="" method="post">
+            <input id="InputSSID" type="text" placeholder="Nom du WiFi (SSID) (3 lettres min, 20 max)">
+            <input id="InputPassword" type="text" placeholder="Mot de passe du WiFi (8 lettres min, 45 max)">
+            <input type="submit" value="Valider la création du WiFi">
+        </form>
+        <button id="StopWifi" class="StopWifi">Eteindre le WiFi</button>
+        <hr>
+        <footer>
+            <h5>Application développée par Florian B</h5>
+            <p>Le partage de connexion via WiFi s'éteint par défaut lors du lancement de l'application</p>
+            <p>Le partage de connexion via WiFi ne s'éteint pas automatiquement lors de la fermeture de l'application. Un bouton est prévu pour cet effet.</p>
+        </footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.js"></script>
+        <script>
+            $(document).ready(function($) {
+                var socket = io.connect('http://localhost:7878');
+                socket.on('debug', function(debug) {
+                    console.log(debug);
+                })
+                socket.on('EndLoading', function(val) {
+                    (val) ? $('#WifiState').html('WiFi actif') : $('#WifiState').html('WiFi éteint');
+                })
+                $('#FormWifi').on('submit', function(el) {
+                    el.preventDefault();
+                    let InputSSID = $('#InputSSID').val();
+                    let InputPassword = $('#InputPassword').val();
+                    if(InputSSID != '' && InputSSID.length >= 3 && InputSSID.length <= 20) {
+                        if(InputPassword != '' && InputPassword.length >= 8 && InputPassword.length <= 45) {
+                            $('#WifiState').html('Chargement...');
+                            socket.emit('NewWifi', {
+                                ssid: InputSSID,
+                                password: InputPassword
+                            });
+                        } else {
+                            InputPassword = $('#InputPassword');
+                            InputPassword.css('border', '2px solid #BE3144');
+                            setTimeout(function() {
+                                InputPassword.css('border', '1px solid #F7F8F8');
+                            }, 500)
+                        }
+                    } else {
+                        InputSSID = $('#InputSSID');
+                        InputSSID.css('border', '2px solid #BE3144');
+                        setTimeout(function() {
+                            InputSSID.css('border', '1px solid #F7F8F8');
+                        }, 500)
+                    }
+                })
+                $('#StopWifi').on('click', function(el) {
+                    el.preventDefault();
+                    $('#WifiState').html('Chargement...');
+                    socket.emit('StopWifi', true)
+                })
+                $('#Minimize').on('click', function(el) {
+                    el.preventDefault();
+                    socket.emit('Minimize', true);
+                })
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+body {
+    background-color: #23252C;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #F7F8F8;
+}
+
+header {
+    width: 100%;
+    height: 15px;
+    background-color: #01CEA2;
+}
+
+header > button {
+    float: right;
+    color: #23252C;
+    background-color: #F7F8F8;
+    border: 1px solid #F7F8F8;
+    margin-right: 10px;
+    height: 15px;
+    font-size: 0.6em;
+    outline: none;
+}
+
+header > button:hover {
+    border: 1px solid #01CEA2;
+}
+
+.FormWifi > input, .StopWifi {
+    width: 75%;
+    height: 35px;
+    text-align: left;
+    outline: none;
+    padding: 10px;
+    margin: 7px;
+    border: 1px solid #F7F8F8;
+    border-radius: 3px;
+    background-color: #F7F8F8;
+    box-shadow: 3px 3px 3px rgba(68,68,68,0.6);
+    transition: all ease;
+    transition-duration: 175ms;
+}
+
+.FormWifi > input:hover, .StopWifi:hover {
+    box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+    width: 78%;
+}
+
+.FormWifi > input[type='submit'], .StopWifi {
+    background-color: #01CEA2;
+    border: 1px solid #01CEA2;
+    text-align: center;
+    cursor: pointer;
+    color: #303841;
+    font-weight: bold;
+}
+
+footer > p {
+    font-size: 0.55em;
+    color: #F7F8F8;
+}
+
+hr {
+    border: 1px solid transparent;
+    border-bottom-color: #01CEA2;
+    background-color: transparent;
+    height: 1px;
+}

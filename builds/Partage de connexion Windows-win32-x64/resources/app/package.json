@@ -1,0 +1,20 @@
+{
+  "name": "partagereseauwindows",
+  "version": "1.0.0",
+  "description": "Application qui permet d'activer le partage de connexion sur Windows.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "app": "./node_modules/.bin/electron .",
+    "build": "electron-packager . \"Partage de connexion Windows\" --overwrite --version-string.CompanyName=\"Fkeloks Développement\" --version-string.FileDescription=\"Partage de connexion Windows.\" --version-string.ProductName=\"Fkeloks Développement\" --prune=true --platform=win32 --arch=x64 --out=builds --ignore \"node_modules/\\.bin\""
+  },
+  "author": "fkeloks",
+  "dependencies": {
+    "electron": "^1.6.10",
+    "socket.io": "^2.0.2",
+    "sudo-prompt": "^7.0.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^8.7.0"
+  }
+}
